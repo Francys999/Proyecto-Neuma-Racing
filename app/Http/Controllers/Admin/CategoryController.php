@@ -94,6 +94,8 @@ class CategoryController extends Controller
                 "title" => "¡Ups!",
                 "text" => "No se puede eliminar la categoría por que tiene productos asociados"
             ]);
+
+            return redirect()->route("admin.categories.edit", $category);
         }
 
         $category->delete();
@@ -103,7 +105,7 @@ class CategoryController extends Controller
             "title" => "¡Bien hecho!",
             "text" => "Categoria eliminada correctamente"
         ]);
-        
+
         return redirect()->route("admin.categories.index");
     }
 }
