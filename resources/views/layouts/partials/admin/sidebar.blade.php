@@ -11,9 +11,15 @@
             'name' => 'Categorias',
             'icon' => 'fa-solid fa-layer-group',
             'route' => route('admin.categories.index'),
-            'active' => request()->routeIs('admin.categories.*')
+            'active' => request()->routeIs('admin.categories.*'),
         ],
-        ];
+        [
+            "name" => "Productos",
+            "icon" => "fa-solid fa-box",
+            "route" => route("admin.products.index"),
+            "active" => request()->routeIs("admin.products.*"),
+        ]
+    ];
 @endphp
 
 <aside id="logo-sidebar"
