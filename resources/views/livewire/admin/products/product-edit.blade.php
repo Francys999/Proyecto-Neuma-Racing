@@ -4,7 +4,7 @@
             <div class="absolute top-8 right-8">
                 <label class="flex items-center px-4 py-2 rounded-lg bg-white cursor-pointer">
                     <i class="fa-solid fa-camera-retro mr-2"></i>
-                    Actualizar
+                    Actualizar imagen
                     <input type="file" class="hidden" accept="image/*" wire:model="image">
                 </label>
             </div>
