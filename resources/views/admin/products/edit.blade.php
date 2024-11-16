@@ -8,7 +8,7 @@
         'route' => route('admin.products.index'),
     ],
     [
-        'name' => $product ->name,
+        'name' => $product->name,
     ]
 ]">
 

@@ -5,7 +5,7 @@ namespace App\Livewire\Admin\Products;
 use App\Models\Category;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Storage;
+use Illuminate\Support\Facades\Storage;
 class ProductEdit extends Component
 {
     use WithFileUploads;
@@ -21,8 +21,6 @@ class ProductEdit extends Component
     {
 
         $this->productEdit =$product->only('sku', 'name','description','image_path','price', 'category_id');
-       
-       
 
         $this->categories =Category::all();
         
