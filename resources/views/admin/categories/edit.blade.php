@@ -34,7 +34,7 @@
                 </x-danger-button>
 
                 <x-button class="ml-2">
-                    Actualizar
+                    Actualizar categoría
                 </x-button>
             </div>
 

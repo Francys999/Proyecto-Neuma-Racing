@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -62,7 +63,17 @@ class ProductController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(Product $product)
-    {
-        //
+    {   
+        Storage::delete($product->image_path);
+
+        $product->delete();
+
+        session()->flash("swal", [
+            "icon" => "success",
+            "title" => "¡Bien hecho!",
+            "text" => "El producto se elimino correctamente."
+        ]);
+
+        return redirect()->route("admin.products.index");
     }
 }
