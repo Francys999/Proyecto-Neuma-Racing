@@ -71,6 +71,8 @@
 
         <x-slot name="content">
 
+            <x-validation-errors class="mb-4" />
+
             <div class="grid grid-cols-2 gap-6 mb-4">
 
                 <div>
@@ -111,9 +113,16 @@
                 <hr class="flex-1">
             </div>
 
-            <div class="mb-4">
+            <div class="mb-4 space-y-4">
                 @foreach ($newOption["features"] as $index => $feature)
-                    <div class="p-6 rounded-lg border border-gray-200">
+                    <div class="p-6 rounded-lg border border-gray-200 relative"
+                        wire:key="features-{{$index}}">
+
+                        <div class="absolute -top-3 px-4 bg-dark">
+                            <button wire:click="removeFeature({{$index}})">
+                                <i class="fa-solid fa-trash-can text-red-500 hover:text-red-600"></i>
+                            </button>
+                        </div>
 
                         <div class="grid grid-cols-2 gap-6">
                             
@@ -155,6 +164,11 @@
         </x-slot>
 
         <x-slot name="footer">
+
+            <button class="btn btn-blue" wire:click="addOption">
+                Agregar
+            </button>
+
         </x-slot>
 
     </x-dialog-modal>
