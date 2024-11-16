@@ -50,6 +50,11 @@ class ProductCreate extends Component
         return Category::where("category_id", $this->category_id)->get();
     }
 
+    public function updateCategoryId($value)
+    {
+        $this->product['category_id']='';
+    }
+    
     public function store()
     {
         $this->validate([

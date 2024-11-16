@@ -21,6 +21,13 @@ class DatabaseSeeder extends Seeder
             "password" => bcrypt("tecsup2024")
         ]);
 
+        User::factory()->create([
+            'name' => 'Franco Cabello',
+            'email' => 'franco_alex_07@hotmail.com',
+            "password" => bcrypt("tecsup2024")
+        ]);
+
+
         $this->call(CategorySeeder::class);
 
         $this->call([ProductSeeder::class]);
