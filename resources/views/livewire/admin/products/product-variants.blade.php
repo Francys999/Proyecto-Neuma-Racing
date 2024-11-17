@@ -40,21 +40,23 @@
                             <div class="flex flex-wrap">
 
                                 @foreach ($option->pivot->features as $feature)
-                                    @switch($option->type)
-                                        @case(1)
-                                            <span
-                                                class="bg-gray-100 text-gray-800 text-xs font-medium me-2 pl-2.5 pr-1.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-400 border border-gray-500">
-                                                {{ $feature['value'] }}
+                                    <div wire:key="option-{{$option->id}}-feature-{{$feature['id']}}">
+                                        @switch($option->type)
+                                            @case(1)
+                                                <span
+                                                    class="bg-gray-100 text-gray-800 text-xs font-medium me-2 pl-2.5 pr-1.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-400 border border-gray-500">
+                                                    {{ $feature['value'] }}
 
-                                                <button class="ml-0.5" {{-- wire:click="deleteFeature({{$feature->id}})" --}}
-                                                    onclick="confirmDeleteFeature({{ $option->id }} ,{{ $feature['id'] }})">
-                                                    <i class="fa-solid fa-xmark hover:text-red-500"></i>
-                                                </button>
-                                            </span>
-                                        @break
+                                                    <button class="ml-0.5" {{-- wire:click="deleteFeature({{$feature->id}})" --}}
+                                                        onclick="confirmDeleteFeature({{ $option->id }} ,{{ $feature['id'] }})">
+                                                        <i class="fa-solid fa-xmark hover:text-red-500"></i>
+                                                    </button>
+                                                </span>
+                                            @break
 
-                                        @default
-                                    @endswitch
+                                            @default
+                                        @endswitch
+                                    </div>
                                 @endforeach
 
                             </div>
