@@ -6,6 +6,7 @@ use App\Livewire\Forms\Admin\Options\NewOptionForm;
 use Livewire\Component;
 use App\Models\Option;
 use Livewire\Attributes\On;
+use App\Models\Feature;
 
 class ManageOptions extends Component
 {
@@ -29,10 +30,16 @@ class ManageOptions extends Component
     {
         $this->newOption->addFeature();
     }
-
+    
     public function removeFeature($index)
     {
         $this->newOption->removeFeature($index);
+    }
+
+    public function deleteFeature(Feature $feature)
+    {   
+        $feature->delete();
+        $this->options = Option::with("features")->get();
     }
 
     public function addOption()

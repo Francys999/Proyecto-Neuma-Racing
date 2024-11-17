@@ -30,15 +30,21 @@
                                 {{ $option->name }}
                             </span>
                         </div>
-
+                        {{--Valores--}}
                         <div class="flex flex-wrap mb-4">
 
                             @foreach ($option->features as $feature)
                                 @switch($option->type)
                                     @case(1)
                                         <span
-                                            class="bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-400 border border-gray-500">
+                                            class="bg-gray-100 text-gray-800 text-xs font-medium me-2 pl-2.5 pr-1.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-400 border border-gray-500">
                                             {{ $feature->value }}
+
+                                            <button class="ml-0.5" 
+                                                {{--wire:click="deleteFeature({{$feature->id}})"--}}
+                                                onclick="confirmDelete({{$feature->id}})">
+                                                <i class="fa-solid fa-xmark hover:text-red-500"></i>
+                                            </button>
                                         </span>
                                     @break
 
@@ -176,5 +182,36 @@
         </x-slot>
 
     </x-dialog-modal>
+
+    @push("js")
+
+        <script>
+            
+            function confirmDelete(featureId) {
+                Swal.fire({
+                    title: "¿Estas seguro?",
+                    text: "¡No podrás revertir esto!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "¡Sí, bórralo!",
+                    cancelButtonText: "Cancelar"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        /*Swal.fire({
+                            title: "¡Eliminado!",
+                            text: "Su archivo ha sido eliminado.",
+                            icon: "success"
+                        });*/
+
+                        @this.call("deleteFeature", featureId);
+                    }
+                });
+            }
+
+        </script>
+
+    @endpush
 
 </div>
