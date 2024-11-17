@@ -18,19 +18,23 @@
         </header>
 
         <div class="p-6">
-
+            {{-- Opciones --}}
             <div class="space-y-6">
 
                 @foreach ($options as $option)
-                    <div class="p-6 rounded-lg border border-gray-200 relative"
-                        wire:key="option-{{$option->id}}">
+                    <div class="p-6 rounded-lg border border-gray-200 relative" wire:key="option-{{ $option->id }}">
 
                         <div class="absolute -top-3 px-4 bg-white">
+
+                            <button class="mr-1" onclick="confirmDelete({{$option->id}}, 'option')">
+                                <i class="fa-solid fa-trash-can text-red-500 hover:text-red-600"></i>
+                            </button>
+
                             <span>
                                 {{ $option->name }}
                             </span>
                         </div>
-                        {{--Valores--}}
+                        {{-- Valores --}}
                         <div class="flex flex-wrap mb-4">
 
                             @foreach ($option->features as $feature)
@@ -40,9 +44,8 @@
                                             class="bg-gray-100 text-gray-800 text-xs font-medium me-2 pl-2.5 pr-1.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-400 border border-gray-500">
                                             {{ $feature->value }}
 
-                                            <button class="ml-0.5" 
-                                                {{--wire:click="deleteFeature({{$feature->id}})"--}}
-                                                onclick="confirmDelete({{$feature->id}})">
+                                            <button class="ml-0.5" {{-- wire:click="deleteFeature({{$feature->id}})" --}}
+                                                onclick="confirmDelete({{ $feature->id }}, 'feature')">
                                                 <i class="fa-solid fa-xmark hover:text-red-500"></i>
                                             </button>
                                         </span>
@@ -55,7 +58,7 @@
                         </div>
 
                         <div>
-                            @livewire("admin.options.add-new-feature", ["option" => $option], key("add-new-feature-" . $option->id))
+                            @livewire('admin.options.add-new-feature', ['option' => $option], key('add-new-feature-' . $option->id))
                         </div>
 
                     </div>
@@ -132,18 +135,13 @@
 
                                 @switch($newOption->type)
                                     @case(1)
-                                        <x-input 
-                                            wire:model="newOption.features.{{ $index }}.value" 
-                                            class="w-full"
+                                        <x-input wire:model="newOption.features.{{ $index }}.value" class="w-full"
                                             placeholder="Ingrese el valor de la opción" />
-                                        @break
+                                    @break
 
                                     @case(2)
-
-                                        <input type="color"
-                                        wire:model="newOption.features.{{ $index }}.value">
-
-                                        @break
+                                        <input type="color" wire:model="newOption.features.{{ $index }}.value">
+                                    @break
 
                                     @default
                                 @endswitch
@@ -183,11 +181,9 @@
 
     </x-dialog-modal>
 
-    @push("js")
-
+    @push('js')
         <script>
-            
-            function confirmDelete(featureId) {
+            function confirmDelete(id, type) {
                 Swal.fire({
                     title: "¿Estas seguro?",
                     text: "¡No podrás revertir esto!",
@@ -205,13 +201,24 @@
                             icon: "success"
                         });*/
 
-                        @this.call("deleteFeature", featureId);
+                        switch (type) {
+                            case "feature":
+
+                                @this.call("deleteFeature", id);
+
+                                break;
+
+                            case "option":
+
+                                @this.call("deleteOption", id);
+
+                                break;
+                        }
+
                     }
                 });
             }
-
         </script>
-
     @endpush
 
 </div>
