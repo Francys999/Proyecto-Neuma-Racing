@@ -143,7 +143,7 @@ class ProductVariants extends Component
             $variant->features()->attach($combinacion);
         }
 
-        return 'Variantes creadas';
+        $this->dispatch("variant-generate");
     }
 
 

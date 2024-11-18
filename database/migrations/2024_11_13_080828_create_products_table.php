@@ -18,6 +18,9 @@ return new class extends Migration
             $table->text("description")->nullable();
             $table->string("image_path");
             $table->float("price");
+            $table->integer("stock")
+                ->unsigned()
+                ->default(0);
             $table->foreignId("category_id")
                 ->constrained()
                 ->onDelete('cascade');

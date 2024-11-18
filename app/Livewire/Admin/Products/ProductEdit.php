@@ -6,6 +6,7 @@ use App\Models\Category;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
+use Livewire\Attributes\On;
 class ProductEdit extends Component
 {
     use WithFileUploads;
@@ -20,7 +21,7 @@ class ProductEdit extends Component
     public function mount($product)
     {
 
-        $this->productEdit =$product->only('sku', 'name','description','image_path','price', 'category_id');
+        $this->productEdit =$product->only('sku', 'name','description','image_path','price', 'stock', 'category_id');
 
         $this->categories =Category::all();
         
@@ -46,6 +47,11 @@ class ProductEdit extends Component
         $this->productEdit['category_id']='';
     }
 
+    #[On("variant-generate")]
+    public function updateProduct() {
+        $this->product = $this->product->fresh();
+    }
+
     public function store() 
     {
         $this->validate([
@@ -53,7 +59,8 @@ class ProductEdit extends Component
             "productEdit.sku" => "required|unique:products,sku," . $this->product->id,
             "productEdit.name" => "required|max:255",
             "productEdit.description" => "nullable",
-            "productEdit.price" => "required|numeric|min:0",    
+            "productEdit.price" => "required|numeric|min:0",
+            "productEdit.stock" => "required|numeric|min:0",   
             "productEdit.category_id" => "required|exists:categories,id",
         ]);
 
