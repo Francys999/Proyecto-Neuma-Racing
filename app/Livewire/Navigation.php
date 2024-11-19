@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use Livewire\Attributes\Computed;
 use Livewire\Component;
 
 class Navigation extends Component
@@ -11,7 +12,9 @@ class Navigation extends Component
     public function mount()
     {
         $this->categories = \App\Models\Category::all();
+        $this->category_id = $this->categories->first()->id;
     }
+
 
     public function render()
     {
