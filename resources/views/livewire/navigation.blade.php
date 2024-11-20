@@ -33,7 +33,7 @@
                                         src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
                                 </button>
                             @else
-                                <button class="text-2xl md:text-3xl">
+                                <button class="text-2xl md:text-2xl">
                                     <i class="fas fa-user text-white"></i>
                                 </button>
                             @endauth
@@ -81,7 +81,7 @@
 
                     </x-dropdown>
 
-                    <button class="text-2xl md:text-3xl">
+                    <button class="text-2xl md:text-2xl">
                         <i class="fas fa-shopping-cart text-white"></i>
                     </button>
                 </div>
