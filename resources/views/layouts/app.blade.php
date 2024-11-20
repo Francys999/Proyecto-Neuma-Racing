@@ -12,6 +12,8 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
+    @stack("css")
+
     <!-- Font Awesome -->
 
     <script src="https://kit.fontawesome.com/55a6c1b3db.js" crossorigin="anonymous"></script>
@@ -42,6 +44,8 @@
     @stack('modals')
 
     @livewireScripts
+
+    @stack("js")
 </body>
 
 </html>
