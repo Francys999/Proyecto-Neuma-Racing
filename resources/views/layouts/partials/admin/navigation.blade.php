@@ -21,7 +21,7 @@
 
                     <div>
                         <span
-                            class="self-center text-xl font-sans sm:text-2xl whitespace-nowrap dark:text-white text-gray-500">Panel de Administrador</span>
+                            class="self-center text-xl font-sans sm:text-2xl whitespace-nowrap dark:text-white text-gray-500">Panel del Administrador</span>
                     </div>
                 </div>
             </div>
