@@ -12,11 +12,13 @@
     ],
 ]">
 
-    <form action="{{ route('admin.covers.create') }}" method="POST">
+    <form action="{{ route('admin.covers.store') }}" 
+        method="POST"
+        enctype="multipart/form-data">
 
         @csrf
 
-        <figure class="relative">
+        <figure class="relative mb-4">
             <div class="absolute top-8 right-8">
                 <label class="flex items-center px-4 py-2 rounded-lg bg-white cursor-pointer">
                     <i class="fa-solid fa-camera-retro mr-2"></i>
@@ -28,6 +30,54 @@
                 class="w-full aspect-[3/1] object-cover object-center"
                 id="imgPreview">
         </figure>
+
+        <x-validation-errors class="mb-4" />
+
+        <div class="mb-4">
+            <x-label>
+                Título
+            </x-label>
+
+            <x-input name="title" value="{{ old('title') }}" class="w-full" placeholder="Por favor ingrese el título de la portada" />
+        </div>
+
+        <div class="mb-4">
+            <x-label>
+                Fecha de inicio
+            </x-label>
+
+            <x-input type="date" name="start_at" value="{{ old('start_at', now()->format('Y-m-d')) }}" class="w-full" />
+        </div>
+
+        <div class="mb-4">
+            <x-label>
+                Fecha fin (opcional)
+            </x-label>
+
+            <x-input type="date" name="end_at" value="{{ old('end_at') }}" class="w-full" />
+        </div>
+
+        <div class="mb-4 flex space-x-2">
+
+            <label>
+                <x-input type="radio" name="is_active" value="1" 
+                    checked
+                />
+                Activo
+            </label>
+
+            <label>
+                <x-input type="radio" name="is_active" value="0" />
+                Inactivo
+            </label>
+
+        </div>
+
+        <div class="flex justify-end">
+            <x-button>
+                Crear portada
+            </x-button>
+        </div>
 
     </form>
 
