@@ -125,7 +125,7 @@
                     <ul>
                         @foreach ($categories as $category)
                             <li>
-                                <a href=""
+                                <a href="{{route('categories.show', $category)}}"
                                     class="flex item-center justify-between px-4 py-4 text-gray-700 hover:bg-gray-400">
                                     {{ $category->name }}
 

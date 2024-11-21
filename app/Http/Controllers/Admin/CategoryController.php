@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Option;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -50,9 +51,24 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        //
-    }
+        // Consulta las opciones relacionadas con los productos de la categoría
+        $options = Option::whereHas('products.category', function ($query) use ($category) {
+            $query->where('category_id', $category->id);
+        })->with([
+                 'features' => function($query) use ($category) {
+                    $query -> whereHas('variants.product.category', function($query) use ($category) {
+                        $query -> where('category_id', $category->id);
+                    });
+                }
+         ])
+         ->get();
 
+
+        return $options;
+
+        // Retornar la vista con las opciones y la categoría
+        return view('categories.show', compact('category'));
+    }
     /**
      * Show the form for editing the specified resource.
      */
@@ -88,7 +104,7 @@ class CategoryController extends Controller
     {
 
         if ($category->products->count() > 0) {
-            
+
             session()->flash("swal", [
                 "icon" => "error",
                 "title" => "¡Ups!",
