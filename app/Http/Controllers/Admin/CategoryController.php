@@ -64,11 +64,11 @@ class CategoryController extends Controller
             ->get();
 
 
-        return $options;
+        // return $options;
 
-        // Retornar la vista con las opciones y la categoría
         return view('categories.show', compact('category'));
     }
+
     /**
      * Show the form for editing the specified resource.
      */
