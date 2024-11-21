@@ -18,7 +18,7 @@
                 </div>
 
                 <div class="flex-1 hidden md:block">
-                    <x-input class="w-full" placeholder="Buscar por producto" />
+                    <x-input oninput="search(this.value)" class="w-full" placeholder="Buscar por producto" />
                 </div>
 
                 <div class="flex space-x-8 items-center">
@@ -89,7 +89,7 @@
             </div>
 
             <div class="mt-4 md:hidden">
-                <x-input class="w-full" placeholder="Buscar por producto" />
+                <x-input oninput="search(this.value)" class="w-full" placeholder="Buscar por producto" />
             </div>
 
         </x-container>
@@ -147,4 +147,15 @@
 
 
     </div>
+
+    @push('js')
+        <script>
+            function search(value){
+                Livewire.dispatch("search", {
+                    search: value
+                })
+            }
+        </script>
+    @endpush
+
 </div>

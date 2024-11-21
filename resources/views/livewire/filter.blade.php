@@ -15,7 +15,7 @@
                     }">
                         <button class="px-4 py-2 bg-gray-200 w-full text-left text-gray-700 flex justify-between"
                             x-on:click="open=!open">
-                            {{ $option->name }}
+                            {{ $option['name'] }}
 
                             <i class="fa-solid fa-angle-down"
                                 x-bind:class="{
@@ -27,13 +27,14 @@
                         </button>
 
                         <ul class="mt-2 space-y-2" x-show="open">
-                            @foreach ($option->features as $feature)
+                            @foreach ($option['features'] as $feature)
                                 <li>
                                     <label class="inline-flex items-center">
-                                        <x-checkbox class="mr-2">
-                                        </x-checkbox>
-
-                                        {{ $feature->description }}
+                                        <x-checkbox value="{{ $feature['id'] }}"
+                                            wire:model.live="selected_features"
+                                            class="mr-2" />
+    
+                                        {{ $feature['value'] }}
                                     </label>
                                 </li>
                             @endforeach
@@ -51,7 +52,7 @@
                     Ordenar por:
                 </span>
 
-                <x-select>
+                <x-select wire:model.live="orderBy">
                     <option value="1">
                         Relevancia
                     </option>
