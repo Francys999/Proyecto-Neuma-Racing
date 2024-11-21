@@ -55,13 +55,13 @@ class CategoryController extends Controller
         $options = Option::whereHas('products.category', function ($query) use ($category) {
             $query->where('category_id', $category->id);
         })->with([
-                 'features' => function($query) use ($category) {
-                    $query -> whereHas('variants.product.category', function($query) use ($category) {
-                        $query -> where('category_id', $category->id);
-                    });
-                }
-         ])
-         ->get();
+            'features' => function ($query) use ($category) {
+                $query->whereHas('variants.product.category', function ($query) use ($category) {
+                    $query->where('category_id', $category->id);
+                });
+            }
+        ])
+            ->get();
 
 
         return $options;
