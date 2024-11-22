@@ -31,3 +31,10 @@ Route::get("prueba", function(){
     return Cart::content();
 });
 
+Route::get('/politica-privacidad', function () {
+    return view('politica-privacidad');
+})->name('politica-privacidad');
+
+Route::get('/terminos-condiciones', function () {
+    return view('terminos-condiciones');
+})->name('terminos-condiciones');

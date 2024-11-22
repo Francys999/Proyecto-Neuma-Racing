@@ -10,7 +10,7 @@
 
     <x-slot name="action">
 
-        <a href="{{ route('admin.covers.create') }}" class="btn btn-blue">
+        <a href="{{ route('admin.covers.create') }}" class="btn btn-black">
             Nuevo
         </a>
 
@@ -68,7 +68,7 @@
                     </div>
 
                     <div>
-                        <a class="btn btn-blue" href="{{ route('admin.covers.edit', $cover) }}">
+                        <a class="btn btn-black" href="{{ route('admin.covers.edit', $cover) }}">
                             Editar
                         </a>
                     </div>

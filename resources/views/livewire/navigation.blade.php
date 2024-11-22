@@ -18,7 +18,7 @@
                 </div>
 
                 <div class="flex-1 hidden md:block">
-                    <x-input oninput="search(this.value)" class="w-full" placeholder="Buscar por producto" />
+                    <x-input oninput="search(this.value)" class="w-full h-10 border-0 bg-zinc-800 text-white" placeholder="Buscar por producto" />
                 </div>
 
                 <div class="flex space-x-8 items-center">
@@ -89,7 +89,7 @@
             </div>
 
             <div class="mt-4 md:hidden">
-                <x-input oninput="search(this.value)" class="w-full" placeholder="Buscar por producto" />
+                <x-input oninput="search(this.value)" class="w-full h-10 border-0 bg-zinc-800 text-white" placeholder="Buscar por producto" />
             </div>
 
         </x-container>
@@ -105,7 +105,7 @@
 
             <div class="w-80 h-screen bg-white">
 
-                <div class="bg-black px-4 py-3 text-white font-semibold">
+                <div class="bg-black px-4 py-5 text-white font-semibold">
                     <div class="flex justify-between items-center">
 
                         <span class="text-lg">
@@ -126,7 +126,7 @@
                         @foreach ($categories as $category)
                             <li>
                                 <a href="{{route('categories.show', $category)}}"
-                                    class="flex item-center justify-between px-4 py-4 text-gray-700 hover:bg-gray-400">
+                                    class="flex item-center justify-between px-4 py-4 text-gray-700 hover:bg-gray-300">
                                     {{ $category->name }}
 
                                     <i class="fa-solid fa-angle-right"></i>

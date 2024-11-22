@@ -26,7 +26,7 @@
 
     <x-container>
         
-        <h1 class="text-2xl font-bold text-gray-700 mb-4">
+        <h1 class="text-2xl font-bold text-gray-700 mb-6">
             Últimos productos
         </h1>
 
