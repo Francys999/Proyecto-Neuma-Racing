@@ -12,7 +12,7 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-    @stack("css")
+    @stack('css')
 
     <!-- Font Awesome -->
 
@@ -33,7 +33,7 @@
 
         @livewire('navigation')
 
-        
+
 
         <!-- Page Content -->
         <main>
@@ -41,16 +41,33 @@
         </main>
 
         <div class="mt-16">
-            @include("layouts.partials.app.footer")
+            @include('layouts.partials.app.footer')
         </div>
 
     </div>
 
     @stack('modals')
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     @livewireScripts
 
-    @stack("js")
+    @stack('js')
+
+    @if (session('swal'))
+        <script>
+            Swal.fire({!! json_encode(
+                session('swal'),
+                JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT,
+            ) !!});
+        </script>
+    @endif
+
+    <script>
+        Livewire.on("swal", data => {
+            Swal.fire(data[0]);
+        });
+    </script>
 </body>
 
 </html>
