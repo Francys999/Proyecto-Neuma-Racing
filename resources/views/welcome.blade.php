@@ -24,17 +24,22 @@
 
     </div>
 
+    <div class="items-center">
+    <h1 class="text-3xl font-bold text-center text-black-700 mb-6">
+        !Bienvenidos a Neuma Racing!
+    </h1>
+    </div>  
     <x-container>
         
         <h1 class="text-2xl font-bold text-gray-700 mb-6">
             Últimos productos
         </h1>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 ">
 
             @foreach ($lastProducts as $product)
 
-                <article class="bg-white shadow rounded overflow-hidden">
+                <article class="bg-white shadow rounded overflow-hidden ">
                     <img src="{{ $product->image }}" class="w-full aspect-[16/9] object-cover rounded-lg shadow-md">
 
                     <div class="p-4">
