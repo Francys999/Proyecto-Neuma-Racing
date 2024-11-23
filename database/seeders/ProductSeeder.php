@@ -88,6 +88,14 @@ class ProductSeeder extends Seeder
                 'price' => 340.0,
                 'category_id' => 1,
             ],
+            [
+                'sku' => 1010,
+                'name' => 'Aros Fuel Off-Road',
+                'description' => 'Aros para vehículos todo terreno.',
+                'image_path' => 'products/aroautomovil.jpg',
+                'price' => 340.0,
+                'category_id' => 1,
+            ],
 
             // Productos de la categoría "Llantas" para aútomoviles (category_id = 2)
             [
