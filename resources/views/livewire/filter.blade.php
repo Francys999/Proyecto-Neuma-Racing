@@ -71,10 +71,10 @@
 
             <hr class="my-4">
 
-            <div class="grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 xl:gird-cols-4 gap-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 xl:gird-cols-4 gap-6 ">
 
                 @foreach ($products as $product)
-                    <article class="bg-white shadow rounded overflow-hidden">
+                    <article class="bg-white shadow rounded overflow-hidden ">
                         <img src="{{ $product->image }}" class="w-full aspect-[16/9] object-cover rounded-lg shadow-md">
 
                         <div class="p-4">
