@@ -35,7 +35,7 @@
             @foreach ($lastProducts as $product)
 
                 <article class="bg-white shadow rounded overflow-hidden">
-                    <img src="{{ $product->image }}" class="w-full h-48 object-cover object-center">
+                    <img src="{{ $product->image }}" class="w-full aspect-[16/9] object-cover rounded-lg shadow-md">
 
                     <div class="p-4">
                         <h1 class="text-lg font-bold text-gray-700 line-clamp-2 min-h-[56px] mb-2">

@@ -6,7 +6,7 @@
 
             <div class="col-span-1">
                 <figure class="mb-2">
-                    <img src="{{ $product->image }}" class="aspect-[16/9] w-full object-cover object-center" alt="">
+                    <img src="{{ $product->image }}" class="w-full aspect-[16/9] object-cover rounded-lg shadow-md" alt="">
                 </figure>
                 <h2 class="text-lg font-bold mb-2">Descripción del producto</h2>
                 <div class="text-sm">
