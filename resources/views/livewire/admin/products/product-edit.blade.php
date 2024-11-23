@@ -1,7 +1,7 @@
 <div>
     <form wire:submit="store">
-        <figure class="mb-4 relative w-full h-[900px]"> <!-- Establece una altura fija -->
-            <div class="absolute top-8 right-8">
+        <figure class="mb-4 relative w-full max-w-2xl mx-auto"> <!-- Establece una altura fija -->
+            <div class="absolute top-4 right-4">
                 <label class="flex items-center px-4 py-2 rounded-lg bg-white cursor-pointer">
                     <i class="fa-solid fa-camera-retro mr-2"></i>
                     Actualizar imagen
@@ -9,8 +9,10 @@
                 </label>
             </div>
 
-            <img class="w-full h-full object-cover object-center"
-                src="{{ $image ? $image->temporaryUrl() : Storage::url($productEdit['image_path'])}}" alt="">
+            <img class="w-full aspect-[16/9] object-cover rounded-lg shadow-md"
+                src="{{ $image ? $image->temporaryUrl() : Storage::url($productEdit['image_path']) }}"
+                alt="Imagen del producto">
+        </figure>
         </figure>
 
         <x-validation-errors class="mb-4" />
@@ -54,7 +56,6 @@
             </div>
 
             @empty($product->variants->count() > 0)
-
                 <div class="mb-4">
                     <x-label class="mb-1">
                         Stock
@@ -63,7 +64,6 @@
                     <x-input type="number" wire:model="productEdit.stock" class="w-full"
                         placeholder="Por favor ingrese el stock del producto" />
                 </div>
-
             @endempty
 
             <div class="flex justify-end">
@@ -90,7 +90,7 @@
     @push('js')
         <script>
             function confirmDelete() {
-    
+
                 Swal.fire({
                     title: "¿Estas seguro?",
                     text: "¡No podrás revertir esto!",

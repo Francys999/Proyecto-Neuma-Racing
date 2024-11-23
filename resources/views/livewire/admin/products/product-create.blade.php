@@ -1,7 +1,7 @@
 <div>
     <form wire:submit="store">
-        <figure class="mb-4 relative w-full h-[900px]"> <!-- Establece una altura fija -->
-            <div class="absolute top-8 right-8">
+        <figure class="mb-4 relative w-full max-w-2xl mx-auto"> <!-- Establece una altura fija -->
+            <div class="absolute top-4 right-4">
                 <label class="flex items-center px-4 py-2 rounded-lg bg-white cursor-pointer">
                     <i class="fa-solid fa-camera-retro mr-2"></i>
                     Actualizar imagen
@@ -9,7 +9,7 @@
                 </label>
             </div>
 
-            <img class="w-full h-full object-cover object-center"
+            <img class="w-full aspect-[16/9] object-cover rounded-lg shadow-md"
                 src="{{ $image ? $image->temporaryUrl() : asset('images/notavailable.jpeg') }}" alt="">
         </figure>
 
