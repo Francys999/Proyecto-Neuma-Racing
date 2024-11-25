@@ -6,7 +6,7 @@
 
             <div class="col-span-1">
                 <figure>
-                    <img src="{{ $product->image }}" class="w-full aspect-[1/1] object-cover rounded-lg shadow-md" alt="">
+                    <img src="{{ $this->variant->image }}" class="w-full aspect-[1/1] object-cover rounded-lg shadow-md" alt="">
                 </figure>
             </div>
 
@@ -60,6 +60,34 @@
                         x-on:click="qty = qty + 1">
                         +
                     </button>
+
+                </div>
+
+                <div class="flex flex-wrap">
+
+                    @foreach ($product->options as $option)
+                        
+                        <div class="mr-4 mb-4">
+                            <p class="font-semibold text-lg mb-2">
+                                {{ $option->name }}
+                            </p>
+
+                            <ul class="flex items-center space-x-4">
+                                @foreach ($option->pivot->features as $feature)
+                                    <li>
+                                        {{-- {{ $feature["value"] }} --}}
+                                        <button class="px-4 py-2 font-semibold uppercase text-sm rounded-lg {{ $selectedFeatures[$option->id] == $feature['id'] ? 'bg-red-500 text-white' : 'border border-gray-200 text-gray-700' }}"
+                                            wire:click = "$set('selectedFeatures.{{ $option->id }}', {{ $feature['id'] }})"
+                                        >
+                                            {{ $feature["value"] }}
+                                        </button>
+
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+
+                    @endforeach
 
                 </div>
 
