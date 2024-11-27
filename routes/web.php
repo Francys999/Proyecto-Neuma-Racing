@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\WelcomeController;
 use App\Models\Category;
@@ -15,6 +16,8 @@ Route::get('/', [WelcomeController::class, "index"])->name("welcome.index");
 Route::get('categories/{category}', [CategoryController::class, 'show'])->name('categories.show');
 
 Route::get("products/{product}", [ProductController::class, "show"])->name("products.show");
+
+Route::get('cart', [CartController::class, 'index'])->name('cart.index');
 
 Route::middleware([
     'auth:sanctum',
