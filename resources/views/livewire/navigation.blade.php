@@ -81,9 +81,14 @@
 
                     </x-dropdown>
 
-                    <button class="text-2xl md:text-2xl">
-                        <i class="fas fa-shopping-cart text-white"></i>
-                    </button>
+                    <a href="#" class="relative">
+                        <i class="fas fa-shopping-cart text-white text-2xl md:text-2xl"></i>
+                        <span
+                            id="cart-count"
+                            class="absolute -top-2 -end-4 inline-flex items-center justify-center w-6 h-6 bg-yellow-400 rounded-full text-xs font-bold">
+                            {{ Cart::instance('shopping')->count() }}
+                        </span>
+                    </a>
                 </div>
 
             </div>
@@ -150,6 +155,11 @@
 
     @push('js')
         <script>
+
+            Livewire.on('cartUpdated', (count) => {
+                document.getElementById('cart-count').innerText = count;
+            });
+
             function search(value){
                 Livewire.dispatch("search", {
                     search: value

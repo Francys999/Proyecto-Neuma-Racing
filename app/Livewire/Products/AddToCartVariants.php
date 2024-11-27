@@ -6,6 +6,7 @@ use Livewire\Component;
 use Livewire\Attributes\Computed;
 use CodersFree\Shoppingcart\Facades\Cart;
 use App\Models\Feature;
+use Illuminate\Support\Facades\Auth;
 
 class AddToCartVariants extends Component
 {
@@ -49,6 +50,12 @@ class AddToCartVariants extends Component
                                     ->toArray()
             ]
         ]);
+
+        if (auth()->check()) {
+            Cart::store(auth()->id());
+        }
+
+        $this->dispatch('cartUpdated', Cart::count());
 
         $this->dispatch("swal", [
             "icon" => "success",

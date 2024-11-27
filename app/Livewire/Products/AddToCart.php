@@ -4,6 +4,7 @@ namespace App\Livewire\Products;
 
 use Livewire\Component;
 use CodersFree\Shoppingcart\Facades\Cart;
+use Illuminate\Support\Facades\Auth;
 
 class AddToCart extends Component
 {
@@ -26,6 +27,12 @@ class AddToCart extends Component
                 'features' => []
             ]
         ]);
+
+        if (auth()->check()) {
+            Cart::store(auth()->id());
+        }
+
+        $this->dispatch('cartUpdated', Cart::count());
 
         $this->dispatch("swal", [
             "icon" => "success",
