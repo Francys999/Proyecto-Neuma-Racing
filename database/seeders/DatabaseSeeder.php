@@ -16,14 +16,22 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         User::factory()->create([
-            'name' => 'Francis Gabriel Adriano Pomasoncco Martinez',
+            'name' => 'Francis Gabriel Adriano',
+            'last_name' => 'Pomasoncco Martinez',
+            'document_type' => '1',
+            'document_number' => '74833560',
             'email' => 'francis11444@gmail.com',
+            'phone' => '973273406',
             "password" => bcrypt("tecsup2024")
         ]);
 
         User::factory()->create([
-            'name' => 'Franco Cabello',
+            'name' => 'Franco Alexander',
+            'last_name' => 'Cabello Huarcaya',
+            'document_type' => '1',
+            'document_number' => '73233467',
             'email' => 'franco_alex_07@hotmail.com',
+            'phone' => '992656332',
             "password" => bcrypt("tecsup2024")
         ]);
 

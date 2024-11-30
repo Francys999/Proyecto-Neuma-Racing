@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ShippingController;
 use App\Http\Controllers\WelcomeController;
 use App\Models\Category;
 use App\Models\Product;
@@ -18,6 +19,8 @@ Route::get('categories/{category}', [CategoryController::class, 'show'])->name('
 Route::get("products/{product}", [ProductController::class, "show"])->name("products.show");
 
 Route::get('cart', [CartController::class, 'index'])->name('cart.index');
+
+Route::get('shipping', [ShippingController::class, 'index'])->name('shipping.index');
 
 Route::middleware([
     'auth:sanctum',
