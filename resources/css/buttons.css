@@ -2,6 +2,10 @@
     @apply font-bold py-2 px-4 rounded disabled:bg-opacity-50 hover:disabled:bg-opacity-50;
 }
 
+.btn-outline-gray {
+    @apply bg-transparent hover:bg-black text-black hover:text-white border border-black hover:border-transparent;
+}
+
 .btn-blue {
     @apply bg-blue-500 text-white hover:bg-blue-700;
 }
@@ -11,5 +15,5 @@
 }
 
 .btn-black {
-    @apply bg-black text-white hover:bg-gray-700;
+    @apply bg-black text-white hover:bg-gray-800;
 }
