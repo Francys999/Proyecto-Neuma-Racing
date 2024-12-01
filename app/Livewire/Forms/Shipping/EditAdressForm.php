@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Forms;
+namespace App\Livewire\Forms\Shipping;
 
 use App\Enums\TypeOfDocuments;
 use App\Models\Address;
@@ -8,8 +8,9 @@ use Illuminate\Validation\Rules\Enum;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
 
-class CreateAddressForm extends Form
-{
+class EditAdressForm extends Form
+{   
+    public $id;
     public $type = '';
     public $description = '';
     public $district = '';
@@ -54,19 +55,25 @@ class CreateAddressForm extends Form
         ];
     }
 
-    public function save()
+    public function edit($address)
     {
-        // Asegúrate de que el número de documento sea tratado como una cadena
-        $this->receiver_info['document_number'] = (string) $this->receiver_info['document_number'];
+        $this->id = $address->id;
+        $this->type = $address->type;
+        $this->description = $address->description;
+        $this->district = $address->district;
+        $this->reference = $address->reference;
+        $this->receiver = $address->receiver;
+        $this->receiver_info = $address->receiver_info;
+        $this->default = $address->default;
+    }
 
+    public function update()
+    {
         $this->validate();
 
-        if (auth()->user()->addresses->count() === 0) {
-            $this->default = true;
-        }
+        $address = Address::find($this->id);
 
-        Address::create([
-            'user_id' => auth()->id(),
+        $address->update([
             'type' => $this->type,
             'description' => $this->description,
             'district' => $this->district,
@@ -77,13 +84,5 @@ class CreateAddressForm extends Form
         ]);
 
         $this->reset();
-
-        $this->receiver_info = [
-            'name' => auth()->user()->name,
-            'last_name' => auth()->user()->last_name,
-            'document_type' => auth()->user()->document_type,
-            'document_number' => auth()->user()->document_number,
-            'phone' => auth()->user()->phone,
-        ];
     }
 }
