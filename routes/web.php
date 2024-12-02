@@ -25,6 +25,12 @@ Route::get('shipping', [ShippingController::class, 'index'])->name('shipping.ind
 
 Route::get('checkout', [CheckoutController::class, 'index'])->name('checkout.index');
 
+Route::post('checkout/paid', [CheckoutController::class, 'paid'])->name('checkout.paid');
+
+Route::get('gracias', function(){
+    return view('gracias');
+})->name('gracias');
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),

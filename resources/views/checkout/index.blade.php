@@ -146,6 +146,52 @@
                         </button>
                     </div>
 
+                    @if (session('niubiz'))
+                        @php
+
+                            $niubiz = session('niubiz');
+
+                            $response = $niubiz['response'];
+                            $purchaseNumber = $niubiz['purchaseNumber'];
+
+                        @endphp
+
+                        @isset($response['data'])
+                            <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 mt-8"
+                                role="alert">
+                                
+                                <p class="mb-4">
+                                    {{ $response['data']['ACTION_DESCRIPTION'] }}
+                                </p>
+
+                                <P>
+                                    <b>Número de pedido</b>
+                                    {{ $purchaseNumber }}
+                                </P>
+
+                                <p>
+                                    <b>
+                                        Fecha y hora del pedido
+                                    </b>
+
+                                    {{ 
+                                        now()->createFromFormat('ymdHis', $response['data']['TRANSACTION_DATE'])->format('d-m-Y H:i:s')
+                                    }}
+                                </p>
+                                
+                                @isset($response['data']['CARD'])
+
+                                    <p>
+                                        <b>Tarjeta:</b>
+                                        {{ $response['data']['CARD'] }} ({{ $response['data']['BRAND'] }})
+                                    </p>
+
+                                @endisset
+                                
+                            </div>
+                        @endisset
+                    @endif
+
                 </div>
             </div>
 
@@ -171,7 +217,8 @@
                     timeouturl: 'about:blank',
                     merchantlogo: 'img/comercio.png',
                     formbuttoncolor: '#000000',
-                    action: 'paginaRespuesta',
+                    action: "{{ route('checkout.paid') }}?amount=" + amount + "&purchaseNumber=" +
+                        purchasenumber,
                     complete: function(params) {
                         alert(JSON.stringify(params));
                     }
