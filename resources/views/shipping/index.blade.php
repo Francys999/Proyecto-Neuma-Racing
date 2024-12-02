@@ -66,7 +66,7 @@
 
                 </div>
 
-                <a href="" class="btn btn-red block w-full text-center">
+                <a href="{{ route('checkout.index') }}" class="btn btn-red block w-full text-center">
                     Siguiente
                 </a>
 
