@@ -41,7 +41,7 @@ class CheckoutController extends Controller
         ])
             ->post($url_api, [
                 'channel' => 'web',
-                'amount' => Cart::instance('shopping')->subtotal(),
+                'amount' => Cart::instance('shopping')->subtotal() + 5,
                 'antifraud' => [
                     'client_ip' => request()->ip(),
                     'merchanDefineData' => [
