@@ -52,6 +52,12 @@
             'route' => route('admin.orders.index'),
             'active' => request()->routeIs('admin.orders.*'),
         ],
+        [
+            'name' => 'Envíos',
+            'icon' => 'fa-solid fa-shipping-fast',
+            'route' => route('admin.shipments.index'),
+            'active' => request()->routeIs('admin.shipments.index')
+        ],
 
     ];
 @endphp
