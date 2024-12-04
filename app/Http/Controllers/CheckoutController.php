@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Address;
+use App\Models\Order;
 use CodersFree\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -78,14 +80,26 @@ class CheckoutController extends Controller
             ]
         ])->json();
 
-        /*return $response;*/
-
         session()->flash('niubiz' ,[
             'response' => $response,
             "purchaseNumber" => $request->purchaseNumber,
         ]);
 
         if (isset($response['dataMap']) && $response['dataMap']['ACTION_CODE'] == '000') {
+
+            $address = Address::where('user_id', auth()->id())
+                        ->where('default', true)
+                        ->first();
+
+            Order::create([
+                'user_id' => auth()->id(),
+                'content' => Cart::instance('shopping')->content(),
+                'address' => $address,
+                'payment_id' => $response['dataMap']['TRANSACTION_ID'],
+                'total' => Cart::subtotal(),
+            ]);
+
+            Cart::destroy();
 
             return redirect()->route('gracias');
 

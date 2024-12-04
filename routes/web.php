@@ -7,8 +7,11 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShippingController;
 use App\Http\Controllers\WelcomeController;
 use App\Models\Category;
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\Variant;
+use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
+use Barryvdh\DomPDF\PDF;
 use Illuminate\Support\Facades\Route;
 use PhpParser\Node\Stmt\Foreach_;
 use CodersFree\Shoppingcart\Facades\Cart;
@@ -42,8 +45,16 @@ Route::middleware([
 });
 
 Route::get("prueba", function(){
-    Cart::instance('shopping');
-    return Cart::content();
+    
+    $order = Order::first();
+
+    $pdf = FacadePdf::loadView('orders.ticket', compact('order'))->setPaper('a5');
+
+    $pdf->save(storage_path('app/public/tickets/ticket-' . $order->id . '.pdf'));
+
+    $order->pdf_path = 'tickets/ticket-' . $order->id . '.pdf';
+    $order->save();
+
 });
 
 Route::get('/politica-privacidad', function () {

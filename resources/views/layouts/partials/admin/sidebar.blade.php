@@ -8,6 +8,10 @@
         ],
 
         [
+            'header' => 'Administrar página',
+        ],
+
+        [
             "name" => "Opciones",
             "icon" => "fa-solid fa-cog",
             "route" => route("admin.options.index"),
@@ -32,7 +36,22 @@
             "icon" => "fa-solid fa-images",
             "route" => route("admin.covers.index"),
             "active" => request()->routeIs("admin.covers.*"),
-        ]
+        ],
+        [
+            'header' => 'Ordenes y envíos',
+        ],
+        [
+            'name' => 'Conductores',
+            'icon' => 'fa-solid fa-truck',
+            'route' => route('admin.drivers.index'),
+            'active' => request()->routeIs('admin.drivers.*'),
+        ],
+        [
+            'name' => 'Ordenes',
+            'icon' => 'fa-solid fa-shopping-cart',
+            'route' => route('admin.orders.index'),
+            'active' => request()->routeIs('admin.orders.*'),
+        ],
 
     ];
 @endphp
@@ -45,17 +64,26 @@
 
             @foreach ($links as $link)
                 <li>
-                    <a href="{{ $link['route'] }}"
-                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{ $link['active'] ? 'dark:bg-gray-700' : '' }}">
 
-                        <span class="inline-flex w-6 h-6 justify-center items-center">
-                            <i class="{{ $link['icon'] }} text-gray-500"></i>
-                        </span>
+                    @isset($link['header'])
+                        <div class="px-3 py-2 text-xs font-semibold text-gray-500 uppercase">
+                            {{ $link['header'] }}
+                        </div>
+                    @else
 
-                        <span class="ms-2">
-                            {{ $link['name'] }}
-                        </span>
-                    </a>
+                        <a href="{{ $link['route'] }}"
+                            class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{ $link['active'] ? 'dark:bg-gray-700' : '' }}">
+
+                            <span class="inline-flex w-6 h-6 justify-center items-center">
+                                <i class="{{ $link['icon'] }} text-gray-500"></i>
+                            </span>
+
+                            <span class="ms-2">
+                                {{ $link['name'] }}
+                            </span>
+                        </a>
+                        
+                    @endisset
                 </li>
             @endforeach
 

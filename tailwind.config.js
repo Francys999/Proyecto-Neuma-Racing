@@ -11,6 +11,10 @@ export default {
         './resources/views/**/*.blade.php',
         './resources/js/**/*.js', // Incluye scripts JS
         './resources/**/*.js',   // Amplía el alcance
+
+        //Datatables
+
+        './vendor/rappasoft/laravel-livewire-tables/resources/views/**/*.blade.php',
     ],
 
     darkMode: "class", // Desactiva el modo oscuro
