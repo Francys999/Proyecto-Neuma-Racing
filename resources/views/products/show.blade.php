@@ -47,14 +47,26 @@
 
     </x-container>
 
-    @if ($product->variants->count())
+    <x-container>
+        <div class="card">
 
-        @livewire("products.add-to-cart-variants", ["product" => $product])
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="col-span-1">
+                    <figure>
+                        <img src="{{ $product->image }}" class="w-full aspect-[1/1] object-cover rounded-lg shadow-md" alt="">
+                    </figure>
 
-    @else
+                    <div class="text-sm">
+                        {{ $product->description }}
+                    </div>
+                </div>
 
-        @livewire("products.add-to-cart", ["product" => $product])
+                <div class="col-span-1">
+                    @livewire("products.add-to-cart", ["product" => $product])
+                </div>
+            </div>
 
-    @endif
+        </div>
+    </x-container>
 
 </x-app-layout>

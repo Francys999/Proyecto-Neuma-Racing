@@ -7,6 +7,8 @@ use Livewire\Component;
 use App\Models\Option;
 use Livewire\Attributes\Computed;
 use App\Models\Feature;
+use Illuminate\Container\Attributes\DB;
+use Illuminate\Support\Facades\DB as FacadesDB;
 use PhpParser\Node\Expr\FuncCall;
 
 class ProductVariants extends Component
@@ -36,6 +38,9 @@ class ProductVariants extends Component
         'sku' => null,
     ];
 
+    public $new_feature = [
+        /*$option->id => $feature->id*/];
+
     public function updatedVariantOptionId()
     {
         $this->variant["features"] = [
@@ -61,6 +66,44 @@ class ProductVariants extends Component
         return Feature::where("option_id", $this->variant["option_id"])->get();
     }
 
+    public function getFeatures($option_id)
+    {
+        $features = FacadesDB::table('option_product')
+            ->where('product_id', $this->product->id)
+            ->where('option_id', $option_id)
+            ->first()
+            ->features;
+
+        $features = collect(json_decode($features))->pluck('id');
+
+        return Feature::where('option_id', $option_id)
+            ->whereNotIn('id', $features)
+            ->get();
+    }
+
+    public function addNewFeature($option_id)
+    {
+        $this->validate([
+            'new_feature.' . $option_id => 'required',
+        ]);
+
+        $feature = Feature::find($this->new_feature[$option_id]);
+        $this->product->options()->updateExistingPivot($option_id, [
+            'features' => array_merge($this->product->options->find($option_id)->pivot->features, [
+                [
+                    'id' => $feature->id,
+                    'value' => $feature->value,
+                    'description' => $feature->description,
+                ]
+            ])
+        ]);
+
+        $this->product = $this->product->fresh();
+        $this->new_feature[$option_id] = '';
+
+        $this->generarVariantes();
+    }
+
     public function addFeature()
     {
         $this->variant["features"][] = [
@@ -84,7 +127,6 @@ class ProductVariants extends Component
     {
         unset($this->variant["features"][$index]);
         $this->variant["features"] = array_values($this->variant["features"]);
-
     }
 
     public function deleteFeature($option_id, $feature_id)
@@ -135,8 +177,6 @@ class ProductVariants extends Component
         $this->generarVariantes();
 
         $this->reset(["variant", "openModal"]);
-
-
     }
 
 
@@ -144,10 +184,23 @@ class ProductVariants extends Component
     {
 
         $features = $this->product->options->pluck('pivot.features');
-
         $combinaciones = $this->generarCombinaciones($features);
 
         foreach ($combinaciones as $combinacion) {
+
+            $variant = Variant::where('product_id', $this->product->id)
+                ->has('features', count($combinacion))
+                ->whereHas('features', function ($query) use ($combinacion) {
+                    $query->whereIn('feature_id', $combinacion);
+                })
+                ->whereDoesntHave('features', function ($query) use ($combinacion) {
+                    $query->whereNotIn('feature_id', $combinacion);
+                }) 
+                ->first();
+
+            if ($variant) {
+                continue;
+            }
 
             $variant = Variant::create([
 
@@ -178,7 +231,6 @@ class ProductVariants extends Component
             $combinacionTemporal[] = $item['id']; //['a','a','a']
 
             $resultado = array_merge($resultado, $this->generarCombinaciones($arrays, $indice + 1, $combinacionTemporal));
-
         }
 
         return $resultado;
