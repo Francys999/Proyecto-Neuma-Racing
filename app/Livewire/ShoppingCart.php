@@ -5,12 +5,23 @@ namespace App\Livewire;
 use CodersFree\Shoppingcart\Facades\Cart;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\Computed;
 
 class ShoppingCart extends Component
 {
     public function mount()
     {
         Cart::instance('shopping');
+    }
+
+    #[Computed()]
+    public function subtotal()
+    {
+        return Cart::content()->filter(function ($item){
+            return $item->qty <= $item->options['stock'];
+        })->sum(function ($item){
+            return $item->subtotal;
+        });
     }
 
     public function decrease($rowId)

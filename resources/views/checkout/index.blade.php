@@ -36,34 +36,6 @@
                                     </p>
                                 </div>
                             </li>
-
-                            <li>
-                                <label class="p-4 flex items-center">
-                                    <input type="radio" x-model="pago" value="2">
-
-                                    <span class="ml-2">
-                                        Depósito Bancario o Yape
-                                    </span>
-                                </label>
-
-                                <div class="p-4 bg-gray-100 flex justify-center border-t border-gray-400" x-cloak
-                                    x-show="pago == 2">
-
-                                    <div>
-                                        <p>1. Pago por depósito o transferencia bancaria:</p>
-                                        <p>- BCP soles: 198-987654321-98</p>
-                                        <p>- CCI: 002-198-987654321</p>
-                                        <p>- Razón social: Neuma Racing Peru Import e. I. R. L.</p>
-                                        <p>- RUC: 20604664951</p>
-                                        <p>2. Pago por Yape</p>
-                                        <p>- Yape al número +51 948 464 266 (Neuma Racing)</p>
-                                        <p>
-                                            Enviar el comprobante de pago a +51 948 464 266
-                                        </p>
-                                    </div>
-
-                                </div>
-                            </li>
                         </ul>
                     </div>
 
@@ -74,7 +46,7 @@
                 <div class="lg:max-w-[60rem] py-12 px-4 lg:pl-8 sm:pr-6 lg:pr-8">
 
                     <ul class="space-y-4 mb-4">
-                        @foreach (Cart::instance('shopping')->content() as $item)
+                        @foreach ($content as $item)
                             <li class="flex items-center space-x-4">
 
                                 <div class="flex-shrink-0 relative">
@@ -112,7 +84,7 @@
                         </p>
 
                         <p>
-                            S/. {{ Cart::instance('shopping')->subtotal() }}
+                            S/. {{ $subtotal }}
                         </p>
                     </div>
 
@@ -124,7 +96,7 @@
                         </p>
 
                         <p>
-                            S/. 5.00
+                            S/. {{ $delivery }}
                         </p>
                     </div>
 
@@ -136,7 +108,7 @@
                         </p>
 
                         <p>
-                            S/. {{ Cart::instance('shopping')->subtotal() + 5 }}
+                            S/. {{ $total }}
                         </p>
                     </div>
 
@@ -205,7 +177,7 @@
             document.addEventListener('DOMContentLoaded', function() {
 
                 let purchasenumber = Math.floor(Math.random() * 1000000000);
-                let amount = {{ Cart::instance('shopping')->subtotal() + 5 }};
+                let amount = {{ $total }};
 
                 VisanetCheckout.configure({
                     sessiontoken: '{{ $session_token }}',

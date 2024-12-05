@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Address;
 use App\Models\Order;
+use App\Models\Variant;
 use CodersFree\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -12,10 +13,24 @@ class CheckoutController extends Controller
 {
     public function index()
     {
-        $access_token = $this->generateAccessToken();
-        $session_token = $this->generateSessionToken($access_token);
+        Cart::instance('shopping');
 
-        return view('checkout.index', compact('session_token'));
+        $content = Cart::content()->filter(function ($item) {
+            return $item->qty <= $item->options['stock'];
+        });
+
+        $subtotal = $content->sum(function ($item) {
+            return $item->subtotal;
+        });
+
+        $delivery = number_format(5, 2);
+
+        $total = $subtotal + $delivery;
+
+        $access_token = $this->generateAccessToken();
+        $session_token = $this->generateSessionToken($access_token, $total);
+
+        return view('checkout.index', compact('content', 'subtotal', 'delivery', 'total', 'session_token'));
     }
 
     public function generateAccessToken()
@@ -32,7 +47,7 @@ class CheckoutController extends Controller
             ->body();
     }
 
-    public function generateSessionToken($access_token)
+    public function generateSessionToken($access_token, $total)
     {
         $merchant_id = config('services.niubiz.merchant_id');
         $url_api = config('services.niubiz.url_api') . "/api.ecommerce/v2/ecommerce/token/session/{$merchant_id}";
@@ -43,7 +58,7 @@ class CheckoutController extends Controller
         ])
             ->post($url_api, [
                 'channel' => 'web',
-                'amount' => Cart::instance('shopping')->subtotal() + 5,
+                'amount' => $total,
                 'antifraud' => [
                     'client_ip' => request()->ip(),
                     'merchanDefineData' => [
@@ -55,7 +70,7 @@ class CheckoutController extends Controller
             ])
             ->json();
 
-            return $response['sessionKey'];
+        return $response['sessionKey'];
     }
 
     public function paid(Request $request)
@@ -80,31 +95,41 @@ class CheckoutController extends Controller
             ]
         ])->json();
 
-        session()->flash('niubiz' ,[
+        session()->flash('niubiz', [
             'response' => $response,
             "purchaseNumber" => $request->purchaseNumber,
         ]);
 
         if (isset($response['dataMap']) && $response['dataMap']['ACTION_CODE'] == '000') {
 
+            Cart::instance('shopping');
+
+            $content = Cart::content()->filter(function ($item) {
+                return $item->qty <= $item->options['stock'];
+            });
+
             $address = Address::where('user_id', auth()->id())
-                        ->where('default', true)
-                        ->first();
+                ->where('default', true)
+                ->first();
 
             Order::create([
                 'user_id' => auth()->id(),
-                'content' => Cart::instance('shopping')->content(),
+                'content' => $content,
                 'address' => $address,
                 'payment_id' => $response['dataMap']['TRANSACTION_ID'],
-                'total' => Cart::subtotal(),
+                'total' => $response['dataMap']['AMOUNT'],
             ]);
+            
+            foreach ($content as $item) {
+                Variant::where('sku', $item->options['sku'])
+                    ->decrement('stock', $item->qty);
 
-            Cart::destroy();
+                Cart::remove($item->rowId);
+            }
 
             return redirect()->route('gracias');
-
         }
 
         return redirect()->route('checkout.index');
-    }   
+    }
 }
