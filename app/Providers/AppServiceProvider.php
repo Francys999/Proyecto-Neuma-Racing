@@ -21,5 +21,7 @@ class AppServiceProvider extends ServiceProvider
     {
         \App\Models\Cover::observe(\App\Observers\CoverObserver::class);
         \App\Models\Order::observe(\App\Observers\OrderObserver::class);
+        \App\Models\Product::observe(\App\Observers\ProductOberserver::class);
+        \App\Models\Variant::observe(\App\Observers\VariantObserver::class);
     }
 }

@@ -85,9 +85,7 @@
 
     </section>
 
-    @if ($product->variants->count())
-
-        <section class="rounded-lg border border-gray-100 bg-white shadow-lg mt-12">
+    <section class="rounded-lg border border-gray-100 bg-white shadow-lg mt-12">
             <header class="border-b border-gray-200 px-6 py-2">
 
                 <div class="flex justify-between">
@@ -108,25 +106,30 @@
                         <img src="{{$item->image}}" class="w-12 h-12 object-cover object-center">
 
                         <p class="divide-x">
-                            @foreach ($item->features  as $feature)
+                            @forelse ($item->features  as $feature)
                                 <span class="px-3">
                                     {{$feature->value}}
                                 </span>
-                            @endforeach
+
+                            @empty
+                                <span class="px-3">
+                                    Variante principal
+                                </span>
+                            @endforelse
                         </p>
 
-                        <a href="{{route('admin.products.variants', [$product, $item])}}" class="ml-auto  btn btn-blue">
+                        <button
+                            wire:click="editVariant({{ $item->id }})" 
+                            class="ml-auto  btn btn-black">
                             Editar
-                        </a>
+                        </button>
                     </li>
 
                     @endforeach
 
                 </ul>
             </div>
-        </section>
-
-    @endif
+    </section>
 
     <x-dialog-modal wire:model="openModal">
 
@@ -149,7 +152,7 @@
                         Selecciona una opción
                     </option>
 
-                    @foreach ($options as $option)
+                    @foreach ($this->options as $option)
                         <option value="{{ $option->id }}">
                             {{ $option->name }}
                         </option>
@@ -229,6 +232,48 @@
                 Guardar
             </x-button>
 
+        </x-slot>
+
+    </x-dialog-modal>
+
+    {{-- Modal editar variante --}}
+
+    <x-dialog-modal wire:model="variantEdit.open">
+
+        <x-slot name="title">
+            Editar variante
+        </x-slot>
+
+        <x-slot name="content">
+
+            <div class="mb-4">
+                <x-label>
+                    SKU
+                </x-label>
+                <x-input wire:model="variantEdit.sku" 
+                    class="w-full"/>
+                <x-validation-errors for="variantEdit.sku" />
+            </div>
+
+            <div>
+                <x-label>
+                    Stock
+                </x-label>
+                <x-input wire:model="variantEdit.stock" 
+                    class="w-full"/>
+                <x-validation-errors for="variantEdit.stock" />
+            </div>
+
+        </x-slot>
+
+        <x-slot name="footer">
+            <x-danger-button x-on:click="show = false">
+                Cancelar
+            </x-danger-button>
+
+            <x-button class="ml-2" wire:click="updateVariant">
+                Guardar
+            </x-button>
         </x-slot>
 
     </x-dialog-modal>
