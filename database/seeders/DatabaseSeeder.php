@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Contracts\Permission;
 
 class DatabaseSeeder extends Seeder
 {
@@ -35,11 +36,17 @@ class DatabaseSeeder extends Seeder
             "password" => bcrypt("tecsup2024")
         ]);
 
+        User::factory(20)->create();
+
 
         $this->call(CategorySeeder::class);
 
         $this->call([ProductSeeder::class]);
 
         $this->call([OptionSeeder::class]);
+
+        $this->call([PermissionSeeder::class]);
+
+        $this->call([RoleSeeder::class]);
     }
 }
