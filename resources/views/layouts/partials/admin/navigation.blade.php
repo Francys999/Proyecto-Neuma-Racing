@@ -27,7 +27,7 @@
             </div>
             <div class="flex items-center">
                 <div class="flex items-center ms-3">
-                    <x-dropdown align="right" width="48">
+                    <x-dropdown allign="right" width="48">
                         <x-slot name="trigger">
                             @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
                                 <button

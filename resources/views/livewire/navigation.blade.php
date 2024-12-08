@@ -1,7 +1,7 @@
 <div x-data="{
     open: false,
 }">
-    <header class="bg-black">
+    <header class="bg-black ">
 
         <x-container class="px-4 py-4">
 
