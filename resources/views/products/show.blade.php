@@ -55,10 +55,6 @@
                     <figure>
                         <img src="{{ $product->image }}" class="w-full aspect-[1/1] object-cover rounded-lg shadow-md" alt="">
                     </figure>
-
-                    <div class="text-sm">
-                        {{ $product->description }}
-                    </div>
                 </div>
 
                 <div class="col-span-1">
