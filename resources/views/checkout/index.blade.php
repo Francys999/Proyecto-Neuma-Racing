@@ -1,181 +1,144 @@
 <x-app-layout>
+    <div class="-mb-16 text-gray-700" x-data="{ pago: 1 }">
 
-    <div class="-mb-16 text-gray-700" x-data="{
-        pago: 1
-    }">
+        <!-- Sección principal -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
-        <div class="grid grid-cols-1 lg:grid-cols-2">
-
-            <div class="col-span-1 bg-white">
+            <!-- Opciones de pago -->
+            <div class="col-span-1 bg-white rounded-lg shadow">
                 <div class="lg:max-w-[40erm] py-12 px-4 lg:pr-8 sm:pl-6 lg:pl-8">
 
-                    <h1 class="text-2xl font-semibold mb-2">
+                    <h1 class="text-2xl font-semibold mb-4 text-gray-800">
                         Pago
                     </h1>
 
-                    <div class="shadow rounded-lg overflow-hidden border border-gray-400">
-                        <ul class="divide-y divide-gray-400">
+                    <div class="shadow rounded-lg overflow-hidden border border-gray-300">
+                        <ul class="divide-y divide-gray-300">
                             <li>
                                 <label class="p-4 flex items-center">
-                                    <input type="radio" x-model="pago" value="1">
-
-                                    <span class="ml-2">
-                                        Tarjeta de débito / crédito
-                                    </span>
-
-                                    <img class="h-6 ml-auto" src="https://codersfree.com/img/payments/credit-cards.png"
-                                        alt="">
+                                    <input type="radio" x-model="pago" value="1" class="text-red-500 focus:ring-red-500">
+                                    <span class="ml-2 font-medium text-gray-800">Tarjeta de débito / crédito</span>
+                                    <img class="h-6 ml-auto" src="https://codersfree.com/img/payments/credit-cards.png" alt="">
                                 </label>
 
-                                <div class="p-4 bg-gray-100 text-center border-t border-gray-400" x-show="pago == 1">
-                                    <i class="fa-regular fa-credit-card text-9xl"></i>
-
-                                    <p class="mt-2">
-                                        Luego de hacer click en "Pagar ahora", se abrirá el checkout de Niubiz para
-                                        completar tu compra de forma segura.
+                                <div class="p-4 bg-gray-100 text-center border-t border-gray-300" x-show="pago == 1">
+                                    <i class="fa-regular fa-credit-card text-6xl text-gray-500"></i>
+                                    <p class="mt-4 text-sm text-gray-600">
+                                        Luego de hacer click en "Finalizar pedido", se abrirá el checkout de Niubiz para completar tu compra de forma segura.
                                     </p>
                                 </div>
                             </li>
                         </ul>
                     </div>
-
                 </div>
             </div>
 
-            <div class="col-span-1">
+            <!-- Resumen del pedido -->
+            <div class="col-span-1 bg-white rounded-lg shadow">
                 <div class="lg:max-w-[60rem] py-12 px-4 lg:pl-8 sm:pr-6 lg:pr-8">
 
-                    <ul class="space-y-4 mb-4">
+                    <ul class="space-y-4 mb-6">
                         @foreach ($content as $item)
-                            <li class="flex items-center space-x-4">
-
-                                <div class="flex-shrink-0 relative">
-                                    <img class="h-16 aspect-square" src="{{ $item->options->image }}" alt="">
-
-                                    <div
-                                        class="flex justify-center items-center h-6 w-6 bg-yellow-400 rounded-full absolute -right-2 -top-2">
-                                        <span class="text-black font-semibold">
-                                            {{ $item->qty }}
-                                        </span>
+                            <li class="flex items-center space-x-4 bg-gray-50 p-3 rounded-lg">
+                                <div class="relative">
+                                    <img class="h-16 w-16 object-cover rounded-md" src="{{ $item->options->image }}" alt="Producto">
+                                    <div class="flex justify-center items-center h-6 w-6 bg-yellow-400 rounded-full absolute -right-2 -top-2">
+                                        <span class="text-black font-semibold">{{ $item->qty }}</span>
                                     </div>
                                 </div>
-
                                 <div class="flex-1">
-
-                                    <p>
-                                        {{ $item->name }}
-                                    </p>
-
+                                    <p class="font-medium text-gray-800">{{ $item->name }}</p>
                                 </div>
-
-                                <div class="flex-shrink-0">
-                                    <p>
-                                        S/. {{ $item->price }}
-                                    </p>
+                                <div>
+                                    <p class="font-semibold text-gray-800">S/. {{ $item->price }}</p>
                                 </div>
-
                             </li>
                         @endforeach
                     </ul>
 
-                    <div class="flex justify-between">
-                        <p>
-                            Subtotal
-                        </p>
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-center">
+                            <p class="text-sm text-gray-600">Subtotal</p>
+                            <p class="font-medium text-gray-800">S/. {{ $subtotal }}</p>
+                        </div>
 
-                        <p>
-                            S/. {{ $subtotal }}
-                        </p>
+                        <div class="flex justify-between items-center">
+                            <p class="text-sm text-gray-600">
+                                Precio de envío
+                                <i class="fas fa-info-circle text-gray-500" title="El precio de envío es de S/5.00"></i>
+                            </p>
+                            <p class="font-medium text-gray-800">S/. {{ $delivery }}</p>
+                        </div>
                     </div>
 
-                    <div class="flex justify-between">
-                        <p>
-                            Precio de envío
+                    <hr class="my-4">
 
-                            <i class="fas fa-info-circle" title="El precio de envío es de S/5.00"></i>
-                        </p>
-
-                        <p>
-                            S/. {{ $delivery }}
-                        </p>
+                    <div class="flex justify-between items-center mb-6">
+                        <p class="text-lg font-bold text-gray-800">Total</p>
+                        <p class="text-lg font-bold text-gray-800">S/. {{ $total }}</p>
                     </div>
 
-                    <hr class="my-3">
+                    <button onclick="VisanetCheckout.open()" class="btn btn-red w-full">
+                        Finalizar pedido
+                    </button>
 
-                    <div class="flex justify-between mb-4">
-                        <p class="text-lg font-semibold">
-                            Total
-                        </p>
-
-                        <p>
-                            S/. {{ $total }}
-                        </p>
-                    </div>
-
-                    <div>
-                        <button onclick="VisanetCheckout.open()" class="btn btn-red w-full">
-                            Finalizar pedido
-                        </button>
-                    </div>
-
+                    <!-- Mensaje informativo si hay errores -->
                     @if (session('niubiz'))
-                        @php
-
-                            $niubiz = session('niubiz');
-
-                            $response = $niubiz['response'];
-                            $purchaseNumber = $niubiz['purchaseNumber'];
-
-                        @endphp
-
-                        @isset($response['data'])
-                            <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 mt-8"
-                                role="alert">
-                                
-                                <p class="mb-4">
-                                    {{ $response['data']['ACTION_DESCRIPTION'] }}
-                                </p>
-
-                                <P>
-                                    <b>Número de pedido</b>
-                                    {{ $purchaseNumber }}
-                                </P>
-
-                                <p>
-                                    <b>
-                                        Fecha y hora del pedido
-                                    </b>
-
-                                    {{ 
-                                        now()->createFromFormat('ymdHis', $response['data']['TRANSACTION_DATE'])->format('d-m-Y H:i:s')
-                                    }}
-                                </p>
-                                
-                                @isset($response['data']['CARD'])
-
-                                    <p>
-                                        <b>Tarjeta:</b>
-                                        {{ $response['data']['CARD'] }} ({{ $response['data']['BRAND'] }})
-                                    </p>
-
-                                @endisset
-                                
-                            </div>
-                        @endisset
+                        <div class="p-4 mt-6 text-sm bg-red-50 text-red-700 rounded-lg">
+                            <p class="mb-2">
+                                <b>Error:</b> {{ $response['data']['ACTION_DESCRIPTION'] ?? 'No se pudo completar el pago' }}
+                            </p>
+                            <p>
+                                <b>Número de pedido:</b> {{ $purchaseNumber }}
+                            </p>
+                            <p>
+                                <b>Fecha y hora:</b> 
+                                {{ now()->createFromFormat('ymdHis', $response['data']['TRANSACTION_DATE'])->format('d-m-Y H:i:s') }}
+                            </p>
+                        </div>
                     @endif
-
                 </div>
             </div>
-
         </div>
 
+        <!-- Sección de relleno -->
+        <div class="mt-10 bg-gray-100 py-10">
+            <div class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                <div class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition duration-300 ease-in-out group">
+                    <i class="fa-solid fa-lock text-red-500 text-4xl mb-4"></i>
+                    <h3 class="text-lg font-bold text-gray-800 group-hover:text-red-500 transition duration-300">
+                        Pago 100% Seguro
+                    </h3>
+                    <p class="text-sm text-gray-600">
+                        Realiza tus pagos con total seguridad gracias a nuestro sistema de checkout protegido.
+                    </p>
+                </div>
+                <div class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition duration-300 ease-in-out group">
+                    <i class="fa-solid fa-clock text-blue-500 text-4xl mb-4"></i>
+                    <h3 class="text-lg font-bold text-gray-800 group-hover:text-blue-500 transition duration-300">
+                        Proceso Rápido
+                    </h3>
+                    <p class="text-sm text-gray-600">
+                        Finaliza tu pedido en pocos minutos con nuestro sistema optimizado de pago.
+                    </p>
+                </div>
+                <div class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition duration-300 ease-in-out group">
+                    <i class="fa-solid fa-user-shield text-green-500 text-4xl mb-4"></i>
+                    <h3 class="text-lg font-bold text-gray-800 group-hover:text-green-500 transition duration-300">
+                        Protección al Cliente
+                    </h3>
+                    <p class="text-sm text-gray-600">
+                        Garantizamos la protección de tu información y un servicio de soporte confiable.
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
 
     @push('js')
         <script type="text/javascript" src="{{ config('services.niubiz.url_js') }}"></script>
         <script type="text/javascript">
             document.addEventListener('DOMContentLoaded', function() {
-
                 let purchasenumber = Math.floor(Math.random() * 1000000000);
                 let amount = {{ $total }};
 
@@ -196,12 +159,6 @@
                     }
                 });
             });
-
-            function procesar(parametros) {
-                console.log(parametros);
-            }
         </script>
     @endpush
-
-
 </x-app-layout>

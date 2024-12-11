@@ -137,7 +137,7 @@
                         
                     <li class="py-4 flex item-center">
 
-                        <img src="{{$item->image}}" class="w-12 h-12 object-cover object-center">
+                        <img src="{{$product->image}}" class="w-12 h-12 object-cover object-center">
 
                         <p class="divide-x">
                             @forelse ($item->features  as $feature)

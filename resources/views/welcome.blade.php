@@ -25,9 +25,9 @@
     </div>
 
     <div class="items-center">
-    <h1 class="text-3xl font-bold text-center text-black-700 mb-6">
-        !Bienvenido a Neuma Racing!
-    </h1>
+        <h1 class="text-5xl font-extrabold text-center mb-8 tracking-wide">
+            <span class="text-gray-900">¡Bienvenido a</span> <span class="text-red-500">Neuma Racing!</span>
+        </h1>
     </div>  
     <x-container>
         
